@@ -1,28 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0s0srq5uxb0m"]
+[gd_scene load_steps=11 format=3 uid="uid://c0s0srq5uxb0m"]
 
 [ext_resource type="Texture2D" uid="uid://dp4twgd0tw5r0" path="res://resources/sprites/bg1.png" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cmlduyaq74chm" path="res://scripts/main.gd" id="1_tipki"]
 [ext_resource type="FontFile" uid="uid://bxn5ubl6ymmv" path="res://resources/fonts/game-over.ttf" id="2_0wfyh"]
 [ext_resource type="FontFile" uid="uid://30twtpfvrmm1" path="res://resources/fonts/Kenney Blocks.ttf" id="3_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://djdufkee64jox" path="res://resources/sprites/tap.png" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://bjdw70lgemmfy" path="res://scripts/touch_area.gd" id="5_tbgi4"]
-
-[sub_resource type="GDScript" id="GDScript_tbgi4"]
-script/source = "extends Node2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _on_touch_area_touched() -> void:
-	pass # Replace with function body.
-"
+[ext_resource type="PackedScene" uid="uid://6dckgc1w5c70" path="res://scenes/player.tscn" id="6_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://bfqqvxk1gwmyp" path="res://scenes/ground.tscn" id="7_tipki"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tbgi4"]
 font = ExtResource("3_jyhfs")
@@ -34,7 +19,7 @@ outline_color = Color(0, 0, 0, 1)
 size = Vector2(395, 678)
 
 [node name="Main" type="Node2D"]
-script = SubResource("GDScript_tbgi4")
+script = ExtResource("1_tipki")
 
 [node name="LayerBg" type="CanvasLayer" parent="."]
 layer = -1
@@ -81,7 +66,7 @@ texture = ExtResource("3_sugp2")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 16)
 
-[node name="TextureTapRIght" type="Sprite2D" parent="LayerUI"]
+[node name="TextureTapRight" type="Sprite2D" parent="LayerUI"]
 position = Vector2(209, 339)
 texture = ExtResource("3_sugp2")
 region_enabled = true
@@ -97,6 +82,14 @@ script = ExtResource("5_tbgi4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TouchArea"]
 position = Vector2(187.5, 329)
 shape = SubResource("RectangleShape2D_jyhfs")
+
+[node name="Ground" parent="." instance=ExtResource("7_tipki")]
+position = Vector2(180, 632)
+
+[node name="Player" parent="." instance=ExtResource("6_o6xl0")]
+visible = false
+position = Vector2(77, 340)
+scale = Vector2(2.5, 2.5)
 
 [connection signal="input_event" from="TouchArea" to="TouchArea" method="_on_input_event"]
 [connection signal="touched" from="TouchArea" to="." method="_on_touch_area_touched"]
