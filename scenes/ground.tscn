@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfqqvxk1gwmyp"]
+
+[ext_resource type="Shader" uid="uid://coyk3ll0wg6u4" path="res://shaders/ground.gdshader" id="1_mi8v4"]
+[ext_resource type="Texture2D" uid="uid://byrls2bq8tvom" path="res://resources/sprites/floor.png" id="1_pybca"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lmksl"]
+shader = ExtResource("1_mi8v4")
+shader_parameter/speed = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mi8v4"]
+size = Vector2(360, 18)
+
+[node name="Ground" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_lmksl")
+texture = ExtResource("1_pybca")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_mi8v4")
