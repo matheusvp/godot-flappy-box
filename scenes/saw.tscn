@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ck2wp3vhol21v"]
+[gd_scene load_steps=13 format=3 uid="uid://ck2wp3vhol21v"]
 
 [ext_resource type="Texture2D" uid="uid://bmhyt2xyja7cm" path="res://resources/sprites/saw_x38.png" id="1_k45r4"]
+[ext_resource type="Script" uid="uid://coovacfc2o5rr" path="res://scripts/saw.gd" id="1_kprxg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kprxg"]
 atlas = ExtResource("1_k45r4")
@@ -69,7 +70,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_k45r4"]
 radius = 18.0
 
-[node name="Saw" type="Area2D"]
+[node name="Saw" type="Area2D" groups=["saws"]]
+script = ExtResource("1_kprxg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8rkwr")
@@ -79,3 +81,5 @@ frame_progress = 0.46666956
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_k45r4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

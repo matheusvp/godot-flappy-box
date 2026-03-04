@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bjdw70lgemmfy" path="res://scripts/touch_area.gd" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://6dckgc1w5c70" path="res://scenes/player.tscn" id="6_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://bfqqvxk1gwmyp" path="res://scenes/ground.tscn" id="7_tipki"]
-[ext_resource type="Script" uid="uid://cp5np1nsc7kle" path="res://scripts/clear_saws.gd" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://ck2wp3vhol21v" path="res://scenes/saw.tscn" id="9_85g3d"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tbgi4"]
 font = ExtResource("3_jyhfs")
@@ -59,9 +59,9 @@ label_settings = SubResource("LabelSettings_tbgi4")
 [node name="ButtonRestart" type="Button" parent="LayerUI"]
 visible = false
 offset_left = 120.0
-offset_top = 360.0
-offset_right = 240.0
-offset_bottom = 400.0
+offset_top = 440.0
+offset_right = 234.0
+offset_bottom = 471.0
 text = "Restart Game"
 
 [node name="TextureTapLeft" type="Sprite2D" parent="LayerUI"]
@@ -97,19 +97,13 @@ scale = Vector2(2.5, 2.5)
 
 [node name="ClearSaws" type="Area2D" parent="."]
 position = Vector2(-55, 0)
-script = ExtResource("10_choun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClearSaws"]
 position = Vector2(0, 324.5)
 shape = SubResource("RectangleShape2D_tipki")
 
-[node name="SawSpawner" type="Timer" parent="."]
-wait_time = 2.0
+[node name="Saw" parent="." instance=ExtResource("9_85g3d")]
+position = Vector2(469, 229)
 
-[connection signal="pressed" from="LayerUI/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="input_event" from="TouchArea" to="TouchArea" method="_on_input_event"]
 [connection signal="touched" from="TouchArea" to="." method="_on_touch_area_touched"]
-[connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
-[connection signal="area_shape_entered" from="ClearSaws" to="ClearSaws" method="_on_area_shape_entered"]
-[connection signal="score_up" from="ClearSaws" to="." method="_on_clear_saws_score_up"]
-[connection signal="timeout" from="SawSpawner" to="." method="_on_saw_spawner_timeout"]

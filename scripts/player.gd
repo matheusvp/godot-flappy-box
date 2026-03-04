@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
+signal player_dead
 const JUMP_VELOCITY = -450.0
 
 var alive: bool = true
@@ -12,8 +13,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if get_slide_collision_count() > 0:
-		animation.play("dead")
-		alive = false
+		kill()
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -27,3 +27,8 @@ func toggle_movent():
 func jump():
 	if alive:
 		velocity.y = JUMP_VELOCITY
+
+func kill():
+	animation.play("dead")
+	alive = false
+	emit_signal("player_dead")
