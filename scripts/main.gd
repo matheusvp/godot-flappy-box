@@ -1,24 +1,24 @@
 extends Node2D
 
 @onready var player: CharacterBody2D = $Player
-@onready var texture_tap_left: Sprite2D = $LayerUI/TextureTapLeft
-@onready var texture_tap_right: Sprite2D = $LayerUI/TextureTapRight
 @onready var label_score: Label = $LayerUI/LabelScore
 @onready var label_gameover: Label = $LayerUI/LabelGameover
 @onready var ground: StaticBody2D = $Ground
 @onready var saw_spawner: Timer = $SawSpawner
 @onready var button_restart: Button = $LayerUI/ButtonRestart
-
+@onready var touch_sprite: AnimatedSprite2D = $TouchSprite
+@onready var title_art: Sprite2D = $TitleArt
 
 
 var game_started: bool = false
+var is_game_over: bool = false
 var score: int = 0
 var saw_node = preload("res://scenes/saw.tscn")
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -32,7 +32,8 @@ func _on_touch_area_touched() -> void:
 		player.jump()
 
 func _on_clear_saws_score_up() -> void:
-	score += 1
+	if !is_game_over:
+		score += 1
 
 func _on_saw_colided_with_player() -> void:
 	player.kill()
@@ -41,20 +42,21 @@ func _on_player_player_dead() -> void:
 	game_over()
 
 func game_start():
-	game_started = true
 	player.visible = true
+	label_score.visible = true
+	touch_sprite.queue_free()
+	game_started = true
+	title_art.queue_free()
 	player.toggle_movent()
-	texture_tap_left.visible = false
-	texture_tap_right.visible = false
 	saw_spawner.start(2)
 
 func game_over():
+	is_game_over = true
 	ground.stop_anim()
 	saw_spawner.stop()
 	button_restart.visible = true
 	label_gameover.visible = true
 	
-
 
 func _on_saw_spawner_timeout() -> void:
 	var new_saw = saw_node.instantiate()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0s0srq5uxb0m"]
+[gd_scene load_steps=15 format=3 uid="uid://c0s0srq5uxb0m"]
 
 [ext_resource type="Texture2D" uid="uid://dp4twgd0tw5r0" path="res://resources/sprites/bg1.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://cmlduyaq74chm" path="res://scripts/main.gd" id="1_tipki"]
@@ -6,7 +6,6 @@
 [ext_resource type="FontFile" uid="uid://30twtpfvrmm1" path="res://resources/fonts/Kenney Blocks.ttf" id="3_jyhfs"]
 [ext_resource type="Script" uid="uid://bjdw70lgemmfy" path="res://scripts/touch_area.gd" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://6dckgc1w5c70" path="res://scenes/player.tscn" id="6_o6xl0"]
-[ext_resource type="Texture2D" uid="uid://dductumc2uig6" path="res://resources/sprites/title-transp.png" id="6_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bfqqvxk1gwmyp" path="res://scenes/ground.tscn" id="7_tipki"]
 [ext_resource type="Texture2D" uid="uid://m5ocv1nldig3" path="res://resources/sprites/touch_finger_one.png" id="9_choun"]
 [ext_resource type="Script" uid="uid://cp5np1nsc7kle" path="res://scripts/clear_saws.gd" id="10_choun"]
@@ -85,18 +84,14 @@ text = "Restart Game"
 wait_time = 2.0
 one_shot = true
 
-[node name="Ground" parent="." instance=ExtResource("7_tipki")]
-position = Vector2(180, 632)
-
-[node name="TitleArt" type="Sprite2D" parent="."]
-position = Vector2(180, 320)
-texture = ExtResource("6_ya4ey")
-
 [node name="TouchSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(180, 382)
+position = Vector2(180, 320)
 sprite_frames = SubResource("SpriteFrames_eb6dy")
 autoplay = "default"
-frame_progress = 0.5838402
+frame_progress = 0.19504921
+
+[node name="Ground" parent="." instance=ExtResource("7_tipki")]
+position = Vector2(180, 632)
 
 [node name="Player" parent="." instance=ExtResource("6_o6xl0")]
 visible = false
