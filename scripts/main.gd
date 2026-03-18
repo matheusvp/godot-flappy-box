@@ -4,6 +4,7 @@ extends Node2D
 @onready var texture_tap_left: Sprite2D = $LayerUI/TextureTapLeft
 @onready var texture_tap_right: Sprite2D = $LayerUI/TextureTapRight
 @onready var label_score: Label = $LayerUI/LabelScore
+@onready var label_gameover: Label = $LayerUI/LabelGameover
 @onready var ground: StaticBody2D = $Ground
 @onready var saw_spawner: Timer = $SawSpawner
 @onready var button_restart: Button = $LayerUI/ButtonRestart
@@ -48,12 +49,11 @@ func game_start():
 	saw_spawner.start(2)
 
 func game_over():
-	var saws = get_tree().get_nodes_in_group("saws")
-	for saw in saws:
-		saw.queue_free()
 	ground.stop_anim()
 	saw_spawner.stop()
 	button_restart.visible = true
+	label_gameover.visible = true
+	
 
 
 func _on_saw_spawner_timeout() -> void:
