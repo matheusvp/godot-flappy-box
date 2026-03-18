@@ -81,6 +81,14 @@ offset_right = 240.0
 offset_bottom = 400.0
 text = "Restart Game"
 
+[node name="ButtonCredits" type="Button" parent="LayerUI"]
+visible = false
+offset_left = 120.0
+offset_top = 419.0
+offset_right = 240.0
+offset_bottom = 459.0
+text = "Credits"
+
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
@@ -122,6 +130,7 @@ position = Vector2(187.5, 329)
 shape = SubResource("RectangleShape2D_jyhfs")
 
 [connection signal="pressed" from="LayerUI/ButtonRestart" to="." method="_on_button_restart_pressed"]
+[connection signal="pressed" from="LayerUI/ButtonCredits" to="." method="_on_button_credits_pressed"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
 [connection signal="area_shape_entered" from="ClearSaws" to="ClearSaws" method="_on_area_shape_entered"]
 [connection signal="score_up" from="ClearSaws" to="." method="_on_clear_saws_score_up"]

@@ -6,6 +6,7 @@ extends Node2D
 @onready var ground: StaticBody2D = $Ground
 @onready var saw_spawner: Timer = $SawSpawner
 @onready var button_restart: Button = $LayerUI/ButtonRestart
+@onready var button_credits: Button = $LayerUI/ButtonCredits
 @onready var touch_sprite: AnimatedSprite2D = $TouchSprite
 @onready var title_art: Sprite2D = $TitleArt
 
@@ -55,6 +56,7 @@ func game_over():
 	ground.stop_anim()
 	saw_spawner.stop()
 	button_restart.visible = true
+	button_credits.visible = true
 	label_gameover.visible = true
 	
 
@@ -68,3 +70,7 @@ func _on_saw_spawner_timeout() -> void:
 
 func _on_button_restart_pressed() -> void:
 	get_tree().reload_current_scene()
+
+
+func _on_button_credits_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/credits.tscn")

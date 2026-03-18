@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5x6atxd5vhqr"]
+
+[ext_resource type="Script" uid="uid://durc1pjdiudsf" path="res://scripts/credits.gd" id="1_0ctdu"]
+[ext_resource type="FontFile" uid="uid://deneknbokdbj8" path="res://resources/fonts/Kenney Mini Square Mono.ttf" id="2_2ckv8"]
+
+[sub_resource type="Gradient" id="Gradient_2ckv8"]
+colors = PackedColorArray(0, 0, 0, 1, 0.20069188, 2.0004343e-05, 0.19092327, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ctdu"]
+gradient = SubResource("Gradient_2ckv8")
+width = 360
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ctdu"]
+font = ExtResource("2_2ckv8")
+
+[node name="Credits" type="Node2D"]
+script = ExtResource("1_0ctdu")
+
+[node name="LayerBG" type="CanvasLayer" parent="."]
+
+[node name="BGSprite" type="Sprite2D" parent="LayerBG"]
+position = Vector2(180, 319)
+scale = Vector2(1, 634)
+texture = SubResource("GradientTexture1D_0ctdu")
+
+[node name="LayerUI" type="CanvasLayer" parent="."]
+
+[node name="GoBackButton" type="Button" parent="LayerUI"]
+offset_left = 120.0
+offset_top = 500.0
+offset_right = 240.0
+offset_bottom = 540.0
+text = "Go Back"
+
+[node name="Label" type="Label" parent="LayerUI"]
+offset_left = 15.0
+offset_top = 114.0
+offset_right = 345.0
+offset_bottom = 334.0
+text = "For the resources provided
+I would like to thank:
+
+- Kenney
+- Rurr
+- Deep-Fold
+- Notokapixel
+"
+label_settings = SubResource("LabelSettings_0ctdu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="LayerUI/GoBackButton" to="." method="_on_go_back_button_pressed"]
