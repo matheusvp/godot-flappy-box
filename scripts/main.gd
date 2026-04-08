@@ -14,6 +14,7 @@ extends Node2D
 var game_started: bool = false
 var is_game_over: bool = false
 var score: int = 0
+var spawner_level: int = 1
 var saw_node = preload("res://scenes/saw.tscn")
 
 
@@ -61,6 +62,27 @@ func game_over():
 	
 
 func _on_saw_spawner_timeout() -> void:
+	adjust_spawn_level()
+	if spawner_level >= 5 && randi_range(1,20) == 17:
+		spawn_saw() # small chance to spawn one extra at higher levels
+	spawn_saw()
+
+func adjust_spawn_level() -> void:
+	if spawner_level == 1 && score > 5:
+		spawner_level = 2
+		saw_spawner.wait_time = 1.5
+	if spawner_level == 2 && score > 10:
+		spawner_level = 3
+		saw_spawner.wait_time = 1
+	if spawner_level == 3 && score > 30:
+		spawner_level = 4
+		saw_spawner.wait_time = 0.75
+	if spawner_level == 4 && score > 60:
+		spawner_level = 5
+		saw_spawner.wait_time = 0.5
+
+
+func spawn_saw() -> void:
 	var new_saw = saw_node.instantiate()
 	new_saw.scale = Vector2(2, 2)
 	new_saw.position = Vector2(490, randi_range(47,570))
