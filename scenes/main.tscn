@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0s0srq5uxb0m"]
+[gd_scene load_steps=17 format=3 uid="uid://c0s0srq5uxb0m"]
 
 [ext_resource type="Texture2D" uid="uid://dp4twgd0tw5r0" path="res://resources/sprites/bg1.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://cmlduyaq74chm" path="res://scripts/main.gd" id="1_tipki"]
@@ -37,6 +37,8 @@ size = Vector2(20, 739)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
 size = Vector2(395, 678)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ya4ey"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tipki")
@@ -79,7 +81,7 @@ offset_left = 120.0
 offset_top = 360.0
 offset_right = 240.0
 offset_bottom = 400.0
-text = "Restart Game"
+text = "Restart"
 
 [node name="ButtonCredits" type="Button" parent="LayerUI"]
 visible = false
@@ -110,6 +112,7 @@ frame_progress = 0.5838402
 visible = false
 position = Vector2(77, 340)
 scale = Vector2(2.5, 2.5)
+slide_on_ceiling = false
 
 [node name="ClearSaws" type="Area2D" parent="."]
 position = Vector2(-55, 0)
@@ -128,6 +131,13 @@ script = ExtResource("5_tbgi4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TouchArea"]
 position = Vector2(187.5, 329)
 shape = SubResource("RectangleShape2D_jyhfs")
+
+[node name="Ceiling" type="StaticBody2D" parent="." groups=["ceiling"]]
+position = Vector2(0, -14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+rotation = 3.1415927
+shape = SubResource("WorldBoundaryShape2D_ya4ey")
 
 [connection signal="pressed" from="LayerUI/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="LayerUI/ButtonCredits" to="." method="_on_button_credits_pressed"]

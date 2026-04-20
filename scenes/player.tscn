@@ -54,3 +54,8 @@ autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qhqgy")
+
+[node name="NoJumpTimer" type="Timer" parent="."]
+wait_time = 0.7
+
+[connection signal="timeout" from="NoJumpTimer" to="." method="_on_no_jump_timer_timeout"]
