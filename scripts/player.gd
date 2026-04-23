@@ -49,7 +49,6 @@ func kill():
 	alive = false
 	emit_signal("player_dead")
 
-
 func _on_no_jump_timer_timeout():
 	jump_enabled = true
 	modulate = Color(1, 1, 1)

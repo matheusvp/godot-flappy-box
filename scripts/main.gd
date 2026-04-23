@@ -17,10 +17,16 @@ var score: int = 0
 var spawner_level: int = 1
 var saw_node = preload("res://scenes/saw.tscn")
 
+# Save File Variables
+const SAVE_FILE_PATH = "user://highscores.json"
+const SAVE_FILE_MAX_ENTRIES = 30
+# This will hold our list of high scores { "score": int, "timestamp": String }
+var high_scores: Array = []
+var is_high_score = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	load_high_scores()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -53,12 +59,20 @@ func game_start():
 	saw_spawner.start(2)
 
 func game_over():
+	if is_game_over:
+		return
 	is_game_over = true
 	ground.stop_anim()
 	saw_spawner.stop()
 	button_restart.visible = true
 	button_credits.visible = true
 	label_gameover.visible = true
+	
+	# Check if it's high enough to enter the top 30
+	if score > 0 and (high_scores.size() < SAVE_FILE_MAX_ENTRIES or score > high_scores.back()["score"]):
+		attempt_save_score(score)
+		is_high_score = true
+		print("New High Score Saved!")
 	
 
 func _on_saw_spawner_timeout() -> void:
@@ -96,3 +110,49 @@ func _on_button_restart_pressed() -> void:
 
 func _on_button_credits_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/credits.tscn")
+
+func load_high_scores():
+	if not FileAccess.file_exists(SAVE_FILE_PATH):
+		high_scores = []
+		return
+
+	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+	var json_string = file.get_as_text()
+	file.close()
+
+	var json = JSON.new()
+	var error = json.parse(json_string)
+	
+	if error == OK:
+		high_scores = json.data
+	else:
+		print("JSON Parse Error: ", json.get_error_message())
+
+func save_scores():
+	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
+	var json_string = JSON.stringify(high_scores)
+	file.store_string(json_string)
+	file.close()
+
+func attempt_save_score(new_score: int):
+	var timestamp = Time.get_datetime_string_from_system()
+	var new_entry = {"score": new_score, "timestamp": timestamp}
+	
+	# Add the score to the list
+	high_scores.append(new_entry)
+	
+	# Sort the list: Higher scores first
+	# This custom sort compares the 'score' key in our dictionaries
+	high_scores.sort_custom(func(a, b): return a["score"] > b["score"])
+	
+	# Trim the list if it exceeds 30 entries
+	if high_scores.size() > SAVE_FILE_MAX_ENTRIES:
+		high_scores.resize(SAVE_FILE_MAX_ENTRIES)
+	
+	save_scores()
+
+func get_rank_of_score(target_score: int, target_timestamp: String) -> int:
+	for i in range(high_scores.size()):
+		if high_scores[i]["score"] == target_score and high_scores[i]["timestamp"] == target_timestamp:
+			return i + 1 # Rank 1 to 30
+	return -1 # Not found
